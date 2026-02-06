@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta name="description" content="ShotVerse: Advancing Camera Control for Text-Driven Multi-Shot Video Creation via a Data-Centric Perspective.">
+    <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ShotVerse: Advancing Camera Control for Text-Driven Multi-Shot Video Creation via a Data-Centric Perspective</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">ShotVerse: Advancing Camera Control for Text-Driven Multi-Shot Video Creation via a Data-Centric Perspective</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="#">Author One</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="#">Author Two</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="#">Author Three</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="#">Author Four</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="#">Author Five</a><sup>2</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Institution One,</span>
+            <span class="author-block"><sup>2</sup>Institution Two</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-fluid" style="max-width: 1200px; padding: 0 3rem; margin: 0 auto;">
+      <h2 class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">ShotVerse Results</h2>
+      <div class="video-grid-4col">
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/01.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/02.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/03.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/04.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/05.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/06.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/07.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/08.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/09.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/10.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/11.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="video-grid-item">
+          <video autoplay controls muted loop playsinline>
+            <source src="./shotverse_videos/12.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-fluid" style="max-width: 1200px; padding: 0 1rem; margin: 0 auto;">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">Comparison with Baselines</h2>
+    <p class="content has-text-justified" style="max-width: 1080px; margin: 0 auto 1.5rem auto;">
+      We compare ShotVerse with three baselines: (1) <strong>ReCamMaster</strong>, a single-shot camera-control model adapted to multi-shot evaluation via a compositional strategy; (2) <strong>HoloCine</strong>, an end-to-end multi-shot generator with structured prompts and explicit shot boundaries; and (3) <strong>Sora2</strong>, a large-scale text-to-video generation model that can produce multi-shot videos without explicit camera trajectory inputs.
+    </p>
+    <div class="video-grid-4col" style="margin-bottom: 0.5rem;">
+      <div style="text-align: center; font-weight: bold;">ReCamMaster</div>
+      <div style="text-align: center; font-weight: bold;">HoloCine</div>
+      <div style="text-align: center; font-weight: bold;">Sora2</div>
+      <div style="text-align: center; font-weight: bold;">ShotVerse (Ours)</div>
+    </div>
+    <div class="video-grid-4col">
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_recam.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_recam.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/03_recam.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/03_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/03_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/03_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_recam.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/05_recam.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/05_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/05_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/05_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/06_recam.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/06_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/06_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/06_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Ablation Study</h2>
+
+    <!-- Camera Encoder -->
+    <h3 class="title is-4">Camera Encoder</h3>
+    <p class="content has-text-justified" style="margin-bottom: 1rem;">
+      Camera encoder is necessary for controllability. Without the camera encoder, the model follows the intended motion pattern less reliably, whereas adding the encoder yields clearer, more stable camera behavior.
+    </p>
+    <div class="video-grid" style="grid-template-columns: repeat(2, 360px) !important;">
+      <div style="text-align: center; font-weight: bold;">w/o Camera Encoder</div>
+      <div style="text-align: center; font-weight: bold;">ShotVerse (Ours)</div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/withoutencoder/01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/withoutencoder/02.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/02.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/withoutencoder/03.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/03.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- 4D RoPE vs 3D RoPE -->
+    <h3 class="title is-4" style="margin-top: 2rem;">4D RoPE vs 3D RoPE</h3>
+    <p class="content has-text-justified" style="margin-bottom: 1rem;">
+      4D RoPE captures shot hierarchy. Replacing 4D RoPE with 3D RoPE significantly degrades Shot Transition Accuracy, demonstrating that the explicit shot axis is critical for respecting shot boundaries.
+    </p>
+    <div class="video-grid" style="grid-template-columns: repeat(2, 360px) !important;">
+      <div style="text-align: center; font-weight: bold;">3D RoPE</div>
+      <div style="text-align: center; font-weight: bold;">4D RoPE (Ours)</div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/3d_rope/01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/04.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/3d_rope/02.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/05.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/3d_rope/03.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/06.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Camera Calibration -->
+    <h3 class="title is-4" style="margin-top: 2rem;">Camera Calibration</h3>
+    <p class="content has-text-justified" style="margin-bottom: 1rem;">
+      Unified camera calibration is necessary. Removing global coordinate calibration reduces inter-shot consistency and aesthetics, supporting that unified coordinates are important for geometrically consistent pose conditioning across cuts.
+    </p>
+    <div class="video-grid" style="grid-template-columns: repeat(2, 360px) !important;">
+      <div style="text-align: center; font-weight: bold;">w/o Camera Calibration</div>
+      <div style="text-align: center; font-weight: bold;">ShotVerse (Ours)</div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/withoutcalibration/01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/07.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/withoutcalibration/02.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/08.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/withoutcalibration/03.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/09.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Training Data -->
+    <h3 class="title is-4" style="margin-top: 2rem;">Training Data</h3>
+    <p class="content has-text-justified" style="margin-bottom: 1rem;">
+      Synthetic supervision hurts film-like rendering. Aesthetics drops noticeably and semantics slightly weakens, suggesting real cinematic triplets provide crucial composition/lighting cues beyond what synthetic triplets capture.
+    </p>
+    <div class="video-grid" style="grid-template-columns: repeat(2, 360px) !important;">
+      <div style="text-align: center; font-weight: bold;">w/ Synthetic Data</div>
+      <div style="text-align: center; font-weight: bold;">Real Cinematic Data (Ours)</div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/recamdata/01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/10.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/recamdata/02.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/11.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/recamdata/03.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/12.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Low & High Noise Encoders -->
+    <h3 class="title is-4" style="margin-top: 2rem;">Noise Injection Strategy</h3>
+    <p class="content has-text-justified" style="margin-bottom: 1rem;">
+      High-noise-only injection is largely sufficient. Adding an additional low-noise encoder slightly trades off perceptual quality, as early pose injection already establishes the global motion scaffold.
+    </p>
+    <div class="video-grid" style="grid-template-columns: repeat(2, 360px) !important;">
+      <div style="text-align: center; font-weight: bold;">w/ Low & High Noise Encoders</div>
+      <div style="text-align: center; font-weight: bold;">ShotVerse (Ours)</div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/both_encoder/01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/13.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/both_encoder/02.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/14.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/both_encoder/03.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./ablation/shotverse/15.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+.DS_store
+.idea
+.claude
+
+# Local manuscript / notes
+paper.tex
