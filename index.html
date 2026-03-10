@@ -49,21 +49,11 @@
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">ShotVerse: Advancing Camera Control for Text-Driven Multi-Shot Video Creation via a Data-Centric Perspective</h1>
           <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="#">Author One</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="#">Author Two</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="#">Author Three</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="#">Author Four</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="#">Author Five</a><sup>2</sup></span>
+            <span class="author-block">Anonymous Authors</span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Institution One,</span>
-            <span class="author-block"><sup>2</sup>Institution Two</span>
+            <span class="author-block">Anonymous Institution</span>
           </div>
 
           <div class="column has-text-centered">
@@ -96,6 +86,15 @@
                 </a>
               </span>
             </div>
+            <!--
+            <div class="section-tags">
+              <a class="section-tag" href="#results">Results</a>
+              <a class="section-tag" href="#camera-controlled">Camera-Controlled</a>
+              <a class="section-tag" href="#open-source">Open-Source</a>
+              <a class="section-tag" href="#closed-source">Closed-Source</a>
+              <a class="section-tag" href="#ablation">Ablation</a>
+            </div>
+            -->
           </div>
         </div>
       </div>
@@ -103,11 +102,20 @@
   </div>
 </section>
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container is-fluid" style="max-width: 1200px; padding: 0 3rem; margin: 0 auto;">
-      <h2 class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">ShotVerse Results</h2>
-      <div class="video-grid-4col">
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">Abstract</h2>
+    <p class="content has-text-justified" style="font-size: 1.05rem; margin-bottom: 0;">
+      Text-driven video generation has democratized film creation, but camera control in cinematic multi-shot scenarios remains a significant block. Implicit textual prompts lack precision, while explicit trajectory conditioning imposes prohibitive manual overhead and often triggers execution failures in current models. To overcome this bottleneck, we propose a data-centric paradigm shift, positing that aligned <em>(Caption, Trajectory, Video)</em> triplets form an inherent joint distribution that can connect automated plotting and precise execution. Guided by this insight, we present <strong><em>ShotVerse</em></strong>, a "Plan-then-Control" framework that decouples generation into two collaborative agents: a VLM (Vision-Language Model)-based Planner that leverages spatial priors to obtain cinematic, globally aligned trajectories from text, and a Controller that renders these trajectories into multi-shot video content via a camera adapter. Central to our approach is the construction of a data foundation: we design an automated multi-shot camera calibration pipeline that aligns disjoint single-shot trajectories into a unified global coordinate system. 
+      This facilitates the curation of <strong><em>ShotVerse-Bench</em></strong>, a high-fidelity cinematic dataset with a three-track evaluation protocol that serves as the bedrock for our framework. Extensive experiments demonstrate that <strong><em>ShotVerse</em></strong> effectively bridges the gap between unreliable textual control and labor-intensive manual plotting, achieving superior cinematic aesthetics and generating multi-shot videos that are both camera-accurate and cross-shot consistent.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-fluid" style="max-width: 1200px; padding: 0 3rem; margin: 0 auto;">
+    <h2 id="results" class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">ShotVerse Results</h2>
+    <div class="video-grid-4col">
         <div class="video-grid-item">
           <video autoplay controls muted loop playsinline>
             <source src="./shotverse_videos/01.mp4" type="video/mp4">
@@ -168,7 +176,6 @@
             <source src="./shotverse_videos/12.mp4" type="video/mp4">
           </video>
         </div>
-      </div>
     </div>
   </div>
 </section>
@@ -176,29 +183,31 @@
 <section class="section">
   <div class="container is-fluid" style="max-width: 1200px; padding: 0 1rem; margin: 0 auto;">
     <h2 class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">Comparison with Baselines</h2>
-    <p class="content has-text-justified" style="max-width: 1080px; margin: 0 auto 1.5rem auto;">
-      We compare ShotVerse with three baselines: (1) <strong>ReCamMaster</strong>, a single-shot camera-control model adapted to multi-shot evaluation via a compositional strategy; (2) <strong>HoloCine</strong>, an end-to-end multi-shot generator with structured prompts and explicit shot boundaries; and (3) <strong>Sora2</strong>, a large-scale text-to-video generation model that can produce multi-shot videos without explicit camera trajectory inputs.
+    <!-- Camera-Controlled Methods -->
+    <h3 id="camera-controlled" class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Camera-Controlled Methods</h3>
+    <p class="content has-text-centered" style="max-width: 960px; margin: 0 auto 1rem auto;">
+      Single-shot camera control models encode camera extrinsics into pretrained video models. We adapt them for multi-shot evaluation by applying shot-by-shot and concatenating results using our calibration pipeline.
     </p>
     <div class="video-grid-4col" style="margin-bottom: 0.5rem;">
+      <div style="text-align: center; font-weight: bold;">MotionCtrl</div>
+      <div style="text-align: center; font-weight: bold;">CameraCtrl</div>
       <div style="text-align: center; font-weight: bold;">ReCamMaster</div>
-      <div style="text-align: center; font-weight: bold;">HoloCine</div>
-      <div style="text-align: center; font-weight: bold;">Sora2</div>
       <div style="text-align: center; font-weight: bold;">ShotVerse (Ours)</div>
     </div>
     <div class="video-grid-4col">
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_motionctrl.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_cameractrl.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
           <source src="./compare/01_recam.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video-grid-item">
-        <video autoplay controls muted loop playsinline>
-          <source src="./compare/01_holo.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video-grid-item">
-        <video autoplay controls muted loop playsinline>
-          <source src="./compare/01_sora.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
@@ -208,17 +217,17 @@
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_motionctrl.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_cameractrl.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
           <source src="./compare/02_recam.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video-grid-item">
-        <video autoplay controls muted loop playsinline>
-          <source src="./compare/02_holo.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video-grid-item">
-        <video autoplay controls muted loop playsinline>
-          <source src="./compare/02_sora.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
@@ -228,7 +237,65 @@
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
+          <source src="./compare/03_motionctrl.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/03_cameractrl.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
           <source src="./compare/03_recam.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/03_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Open-Source Multi-Shot Models -->
+    <h3 id="open-source" class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Open-Source Multi-Shot Models</h3>
+    <p class="content has-text-centered" style="max-width: 960px; margin: 0 auto 1rem auto;">
+      We compare ShotVerse against open-source multi-shot generators. HoloCine is a holistic baseline with explicit shot structure, while MultiShotMaster is another open-source multi-shot video model evaluated under the same prompts.
+    </p>
+    <div class="video-grid-3col" style="margin-bottom: 0.5rem;">
+      <div style="text-align: center; font-weight: bold;">HoloCine</div>
+      <div style="text-align: center; font-weight: bold;">MultiShotMaster</div>
+      <div style="text-align: center; font-weight: bold;">ShotVerse (Ours)</div>
+    </div>
+    <div class="video-grid-3col">
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_multishotmaster.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_holo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_multishotmaster.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_ours.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
@@ -238,7 +305,7 @@
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
-          <source src="./compare/03_sora.mp4" type="video/mp4">
+          <source src="./compare/03_multishotmaster.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
@@ -248,17 +315,12 @@
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
-          <source src="./compare/04_recam.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video-grid-item">
-        <video autoplay controls muted loop playsinline>
           <source src="./compare/04_holo.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
-          <source src="./compare/04_sora.mp4" type="video/mp4">
+          <source src="./compare/04_multishotmaster.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
@@ -268,17 +330,12 @@
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
-          <source src="./compare/05_recam.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video-grid-item">
-        <video autoplay controls muted loop playsinline>
           <source src="./compare/05_holo.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
-          <source src="./compare/05_sora.mp4" type="video/mp4">
+          <source src="./compare/05_multishotmaster.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
@@ -288,17 +345,12 @@
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
-          <source src="./compare/06_recam.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="video-grid-item">
-        <video autoplay controls muted loop playsinline>
           <source src="./compare/06_holo.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
         <video autoplay controls muted loop playsinline>
-          <source src="./compare/06_sora.mp4" type="video/mp4">
+          <source src="./compare/06_multishotmaster.mp4" type="video/mp4">
         </video>
       </div>
       <div class="video-grid-item">
@@ -307,12 +359,102 @@
         </video>
       </div>
     </div>
+
+    <!-- Commercial Multi-Shot Models -->
+    <h3 id="closed-source" class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Closed-Source Multi-Shot Models</h3>
+    <p class="content has-text-centered" style="max-width: 960px; margin: 0 auto 1rem auto;">
+      Leading closed-source models rely on implicit textual control. We provide them with our hierarchical prompts to evaluate their zero-shot cinematic understanding.
+    </p>
+    <div class="video-grid-5col" style="margin-bottom: 0.5rem;">
+      <div style="text-align: center; font-weight: bold;">VEO3</div>
+      <div style="text-align: center; font-weight: bold;">Kling3.0</div>
+      <div style="text-align: center; font-weight: bold;">Sora2</div>
+      <div style="text-align: center; font-weight: bold;">Seedance2.0</div>
+      <div style="text-align: center; font-weight: bold;">ShotVerse (Ours)</div>
+    </div>
+    <div class="video-grid-5col">
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_veo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_kling.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_seedance.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/01_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_veo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_kling.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_seedance.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/02_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_veo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_kling.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_sora.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_seedance.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-grid-item">
+        <video autoplay controls muted loop playsinline>
+          <source src="./compare/04_ours.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Ablation Study</h2>
+    <h2 id="ablation" class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Ablation Study</h2>
 
     <!-- Camera Encoder -->
     <h3 class="title is-4">Camera Encoder</h3>
