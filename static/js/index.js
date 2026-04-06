@@ -216,17 +216,8 @@ function escapeHtml(value) {
 
 function sanitizePromptText(text) {
   return text
-    .replace(/,\s*\[(?:character\d+)\],\s*(a|an|the)\b/gi, ", $1")
-    .replace(/\b([Aa] woman|[Aa] man|[Aa] young woman|[Aa] young man|[Tt]he woman|[Tt]he man|[Tt]he young woman|[Tt]he young man)\s*\[(?:character\d+)\]\s*/g, "$1 ")
-    .replace(/\b([Aa] woman|[Aa] man|[Aa] young woman|[Aa] young man|[Tt]he woman|[Tt]he man|[Tt]he young woman|[Tt]he young man),\s*\[(?:character\d+)\],\s*/g, "$1 ")
-    .replace(/(^|[.!?]\s+)\[(?:character\d+)\],\s*/g, "$1Someone ")
-    .replace(/,\s*\[(?:character\d+)\],\s*/g, ", someone ")
-    .replace(/\[(?:character\d+)\]/g, "")
-    .replace(/\s+,/g, ",")
-    .replace(/,\s*,/g, ", ")
     .replace(/\s{2,}/g, " ")
     .replace(/\s+([.!?])/g, "$1")
-    .replace(/,\s*([.!?])/g, "$1")
     .trim();
 }
 
@@ -288,6 +279,77 @@ function renderPromptBlock(label, text) {
   `;
 }
 
+const scenePromptCache = {};
+
+function parseScenePromptRaw(rawPrompt) {
+  const cleanedRawPrompt = rawPrompt.replace(/^\[scene_[^\]]+\]/, "").trim();
+  const globalMatch = cleanedRawPrompt.match(/\[global_prompt\]([\s\S]*?)(?=\[shot_\d+_prompt\]|$)/);
+  const shotPrompts = Array.from(
+    cleanedRawPrompt.matchAll(/\[shot_(\d+)_prompt\]([\s\S]*?)(?=\[shot_\d+_prompt\]|$)/g)
+  ).map((match) => ({
+    label: `Shot ${match[1]}`,
+    text: match[2].trim(),
+  }));
+
+  return {
+    globalPrompt: globalMatch ? globalMatch[1].trim() : "",
+    shotPrompts,
+  };
+}
+
+async function getScenePromptData(sceneId) {
+  if (!sceneId) {
+    return null;
+  }
+
+  if (!scenePromptCache[sceneId]) {
+    if (typeof scenePromptRawData !== "undefined" && scenePromptRawData[sceneId]) {
+      scenePromptCache[sceneId] = Promise.resolve(
+        parseScenePromptRaw(scenePromptRawData[sceneId])
+      );
+    } else {
+      scenePromptCache[sceneId] = fetch(`./static/scene_prompts/${sceneId}.txt`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to load prompt for ${sceneId}`);
+          }
+          return response.text();
+        })
+        .then(parseScenePromptRaw)
+        .catch(() => null);
+    }
+  }
+
+  return scenePromptCache[sceneId];
+}
+
+function renderPromptPanel(promptData) {
+  if (!promptData || !promptData.globalPrompt) {
+    return `<div class="comparison-prompt-status">Prompt unavailable.</div>`;
+  }
+
+  const promptBlocks = [
+    renderPromptBlock("Global Prompt", promptData.globalPrompt),
+    ...promptData.shotPrompts.map((shotPrompt) =>
+      renderPromptBlock(shotPrompt.label, shotPrompt.text)
+    ),
+  ].join("");
+  const promptPreview = highlightCameraPhrases(sanitizePromptText(promptData.globalPrompt));
+
+  return `
+    <details class="shotverse-prompt-panel">
+      <summary>
+        <span class="shotverse-prompt-summary-head">
+          <span>Prompt Details</span>
+          <span class="shotverse-prompt-hint">Click to expand</span>
+        </span>
+        <span class="shotverse-prompt-preview">${promptPreview}</span>
+      </summary>
+      <div class="shotverse-prompt-groups">${promptBlocks}</div>
+    </details>
+  `;
+}
+
 function renderShotverseResults() {
   const container = document.getElementById("shotverse-results-list");
   if (!container) {
@@ -327,6 +389,95 @@ function renderShotverseResults() {
     .join("");
 }
 
+function renderComparisonVideoTile(videoItem) {
+  return `
+    <div class="comparison-video-item">
+      <div class="comparison-video-label">${escapeHtml(videoItem.label)}</div>
+      <div class="comparison-video-frame">
+        <video autoplay controls muted loop playsinline preload="metadata">
+          <source src="${escapeHtml(videoItem.videoPath)}" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  `;
+}
+
+function renderGroupedVideoCard(group, promptData) {
+  const countClassName = `count-${group.videos.length}`;
+  const gridClassName = `comparison-video-grid ${countClassName}`;
+
+  return `
+    <article class="comparison-group-card ${countClassName}">
+      <div class="comparison-group-stack ${countClassName}">
+        <div class="${gridClassName}">
+          ${group.videos.map(renderComparisonVideoTile).join("")}
+        </div>
+        ${renderPromptPanel(promptData)}
+      </div>
+    </article>
+  `;
+}
+
+async function renderGroupedVideoList(containerId, groups) {
+  const container = document.getElementById(containerId);
+  if (!container || !groups || !groups.length) {
+    return;
+  }
+
+  container.innerHTML = `<div class="comparison-prompt-status">Loading prompts...</div>`;
+
+  const promptDataList = await Promise.all(
+    groups.map((group) => getScenePromptData(group.promptSceneId))
+  );
+
+  container.innerHTML = groups
+    .map((group, index) => renderGroupedVideoCard(group, promptDataList[index]))
+    .join("");
+}
+
+function renderComparisonSections() {
+  if (typeof comparisonSectionData === "undefined") {
+    return;
+  }
+
+  renderGroupedVideoList(
+    "compare-camera-list",
+    comparisonSectionData.cameraControlled.groups
+  );
+  renderGroupedVideoList(
+    "compare-open-source-list",
+    comparisonSectionData.openSource.groups
+  );
+  renderGroupedVideoList(
+    "compare-closed-source-list",
+    comparisonSectionData.closedSource.groups
+  );
+}
+
+function renderAblationSections() {
+  if (typeof ablationSectionData === "undefined") {
+    return;
+  }
+
+  renderGroupedVideoList(
+    "ablation-camera-encoder-list",
+    ablationSectionData.cameraEncoder.groups
+  );
+  renderGroupedVideoList("ablation-rope-list", ablationSectionData.rope.groups);
+  renderGroupedVideoList(
+    "ablation-camera-calibration-list",
+    ablationSectionData.cameraCalibration.groups
+  );
+  renderGroupedVideoList(
+    "ablation-training-data-list",
+    ablationSectionData.trainingData.groups
+  );
+  renderGroupedVideoList(
+    "ablation-noise-injection-list",
+    ablationSectionData.noiseInjection.groups
+  );
+}
+
 $(document).ready(function() {
     $(".navbar-burger").click(function() {
       $(".navbar-burger").toggleClass("is-active");
@@ -359,4 +510,6 @@ $(document).ready(function() {
 
     bulmaSlider.attach();
     renderShotverseResults();
+    renderComparisonSections();
+    renderAblationSections();
 });
