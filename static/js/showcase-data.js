@@ -26,6 +26,10 @@ const comparisonSectionData = {
     groups: [
       {
         promptSceneId: "scene_0018",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide02_shot0.png",
+          shot1: "./static/trajectories/ppt/slide02_shot1.png",
+        },
         videos: [
           { label: "MotionCtrl", videoPath: "./compare/01_motionctrl.mp4" },
           { label: "CameraCtrl", videoPath: "./compare/01_cameractrl.mp4" },
@@ -35,6 +39,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0114",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide05_shot0.png",
+          shot1: "./static/trajectories/ppt/slide05_shot1.png",
+        },
         videos: [
           { label: "MotionCtrl", videoPath: "./compare/02_motionctrl.mp4" },
           { label: "CameraCtrl", videoPath: "./compare/02_cameractrl.mp4" },
@@ -44,6 +52,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0118",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide01_shot0.png",
+          shot1: "./static/trajectories/ppt/slide01_shot1.png",
+        },
         videos: [
           { label: "MotionCtrl", videoPath: "./compare/03_motionctrl.mp4" },
           { label: "CameraCtrl", videoPath: "./compare/03_cameractrl.mp4" },
@@ -57,6 +69,10 @@ const comparisonSectionData = {
     groups: [
       {
         promptSceneId: "scene_0018",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide02_shot0.png",
+          shot1: "./static/trajectories/ppt/slide02_shot1.png",
+        },
         videos: [
           { label: "HoloCine", videoPath: "./compare/01_holo.mp4" },
           { label: "MultiShotMaster", videoPath: "./compare/01_multishotmaster.mp4" },
@@ -65,6 +81,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0114",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide05_shot0.png",
+          shot1: "./static/trajectories/ppt/slide05_shot1.png",
+        },
         videos: [
           { label: "HoloCine", videoPath: "./compare/02_holo.mp4" },
           { label: "MultiShotMaster", videoPath: "./compare/02_multishotmaster.mp4" },
@@ -73,6 +93,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0118",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide01_shot0.png",
+          shot1: "./static/trajectories/ppt/slide01_shot1.png",
+        },
         videos: [
           { label: "HoloCine", videoPath: "./compare/03_holo.mp4" },
           { label: "MultiShotMaster", videoPath: "./compare/03_multishotmaster.mp4" },
@@ -81,6 +105,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0128",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide03_shot0.png",
+          shot1: "./static/trajectories/ppt/slide03_shot1.png",
+        },
         videos: [
           { label: "HoloCine", videoPath: "./compare/04_holo.mp4" },
           { label: "MultiShotMaster", videoPath: "./compare/04_multishotmaster.mp4" },
@@ -89,6 +117,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0143",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide04_shot0.png",
+          shot1: "./static/trajectories/ppt/slide04_shot1.png",
+        },
         videos: [
           { label: "HoloCine", videoPath: "./compare/05_holo.mp4" },
           { label: "MultiShotMaster", videoPath: "./compare/05_multishotmaster.mp4" },
@@ -97,6 +129,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0155",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide06_shot0.png",
+          shot1: "./static/trajectories/ppt/slide06_shot1.png",
+        },
         videos: [
           { label: "HoloCine", videoPath: "./compare/06_holo.mp4" },
           { label: "MultiShotMaster", videoPath: "./compare/06_multishotmaster.mp4" },
@@ -109,6 +145,10 @@ const comparisonSectionData = {
     groups: [
       {
         promptSceneId: "scene_0018",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide02_shot0.png",
+          shot1: "./static/trajectories/ppt/slide02_shot1.png",
+        },
         videos: [
           { label: "VEO3", videoPath: "./compare/01_veo.mp4" },
           { label: "Kling3.0", videoPath: "./compare/01_kling.mp4" },
@@ -119,6 +159,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0114",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide05_shot0.png",
+          shot1: "./static/trajectories/ppt/slide05_shot1.png",
+        },
         videos: [
           { label: "VEO3", videoPath: "./compare/02_veo.mp4" },
           { label: "Kling3.0", videoPath: "./compare/02_kling.mp4" },
@@ -129,6 +173,10 @@ const comparisonSectionData = {
       },
       {
         promptSceneId: "scene_0128",
+        trajectoryImages: {
+          shot0: "./static/trajectories/ppt/slide03_shot0.png",
+          shot1: "./static/trajectories/ppt/slide03_shot1.png",
+        },
         videos: [
           { label: "VEO3", videoPath: "./compare/04_veo.mp4" },
           { label: "Kling3.0", videoPath: "./compare/04_kling.mp4" },
@@ -171,6 +219,10 @@ const ablationSectionData = {
     groups: [
       {
         promptSceneId: "scene_0109",
+        shotTimeline: {
+          totalFrames: 249,
+          shotCutFrames: [0, 93, 185],
+        },
         videos: [
           { label: "3D RoPE", videoPath: "./ablation/3d_rope/01.mp4" },
           { label: "4D RoPE (Ours)", videoPath: "./ablation/shotverse/04.mp4" },
@@ -178,6 +230,10 @@ const ablationSectionData = {
       },
       {
         promptSceneId: "scene_0130",
+        shotTimeline: {
+          totalFrames: 249,
+          shotCutFrames: [0, 53],
+        },
         videos: [
           { label: "3D RoPE", videoPath: "./ablation/3d_rope/02.mp4" },
           { label: "4D RoPE (Ours)", videoPath: "./ablation/shotverse/05.mp4" },
@@ -185,6 +241,10 @@ const ablationSectionData = {
       },
       {
         promptSceneId: "scene_0028",
+        shotTimeline: {
+          totalFrames: 249,
+          shotCutFrames: [0, 101],
+        },
         videos: [
           { label: "3D RoPE", videoPath: "./ablation/3d_rope/03.mp4" },
           { label: "4D RoPE (Ours)", videoPath: "./ablation/shotverse/06.mp4" },

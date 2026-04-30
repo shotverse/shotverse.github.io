@@ -135,6 +135,28 @@
 </section>
 
 <section class="section">
+  <div class="container is-fluid comparison-section-shell">
+    <h2 id="camera-controlled" class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">Comparison with Baselines: Camera-Controlled Methods</h2>
+    <p class="content has-text-centered experiment-explanation" style="max-width: 1120px; margin: 0 auto 1rem auto;">
+      Single-shot camera control models encode camera extrinsics into pretrained video models. We adapt them for multi-shot evaluation by applying shot-by-shot and concatenating results using our calibration pipeline.
+    </p>
+    <div id="compare-camera-list" class="comparison-group-list"></div>
+
+    <h3 id="open-source" class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Open-Source Multi-Shot Models</h3>
+    <p class="content has-text-centered experiment-explanation" style="max-width: 1120px; margin: 0 auto 1rem auto;">
+      We compare ShotVerse against open-source multi-shot generators. HoloCine is a holistic baseline with explicit shot structure, while MultiShotMaster is another open-source multi-shot video model evaluated under the same prompts.
+    </p>
+    <div id="compare-open-source-list" class="comparison-group-list"></div>
+
+    <h3 id="closed-source" class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Closed-Source Multi-Shot Models</h3>
+    <p class="content has-text-centered experiment-explanation" style="max-width: 1120px; margin: 0 auto 1rem auto;">
+      Leading closed-source models rely on implicit textual control. We provide them with our hierarchical prompts to evaluate their zero-shot cinematic understanding.
+    </p>
+    <div id="compare-closed-source-list" class="comparison-group-list"></div>
+  </div>
+</section>
+
+<section class="section">
   <div class="container is-fluid shotverse-results-shell">
     <h2 id="results" class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">ShotVerse Results</h2>
     <p class="shotverse-results-note">
@@ -145,34 +167,12 @@
 </section>
 
 <section class="section">
-  <div class="container is-fluid comparison-section-shell">
-    <h2 id="camera-controlled" class="title is-3 has-text-centered" style="margin-bottom: 1.5rem;">Comparison with Baselines: Camera-Controlled Methods</h2>
-    <p class="content has-text-centered" style="max-width: 1120px; margin: 0 auto 1rem auto;">
-      Single-shot camera control models encode camera extrinsics into pretrained video models. We adapt them for multi-shot evaluation by applying shot-by-shot and concatenating results using our calibration pipeline.
-    </p>
-    <div id="compare-camera-list" class="comparison-group-list"></div>
-
-    <h3 id="open-source" class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Open-Source Multi-Shot Models</h3>
-    <p class="content has-text-centered" style="max-width: 1120px; margin: 0 auto 1rem auto;">
-      We compare ShotVerse against open-source multi-shot generators. HoloCine is a holistic baseline with explicit shot structure, while MultiShotMaster is another open-source multi-shot video model evaluated under the same prompts.
-    </p>
-    <div id="compare-open-source-list" class="comparison-group-list"></div>
-
-    <h3 id="closed-source" class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Closed-Source Multi-Shot Models</h3>
-    <p class="content has-text-centered" style="max-width: 1120px; margin: 0 auto 1rem auto;">
-      Leading closed-source models rely on implicit textual control. We provide them with our hierarchical prompts to evaluate their zero-shot cinematic understanding.
-    </p>
-    <div id="compare-closed-source-list" class="comparison-group-list"></div>
-  </div>
-</section>
-
-<section class="section">
   <div class="container is-fluid ablation-section-shell">
     <h2 id="ablation" class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Ablation Study</h2>
 
     <div class="ablation-subsection">
       <h3 class="title is-4 ablation-subsection-title">Camera Encoder</h3>
-      <p class="content ablation-subsection-text">
+      <p class="content ablation-subsection-text experiment-explanation">
         Camera encoder is necessary for controllability. Without the camera encoder, the model follows the intended motion pattern less reliably, whereas adding the encoder yields clearer, more stable camera behavior.
       </p>
       <div id="ablation-camera-encoder-list" class="comparison-group-list"></div>
@@ -180,15 +180,19 @@
 
     <div class="ablation-subsection">
       <h3 class="title is-4 ablation-subsection-title">4D RoPE vs 3D RoPE</h3>
-      <p class="content ablation-subsection-text">
+      <p class="content ablation-subsection-text experiment-explanation">
         4D RoPE captures shot hierarchy. Replacing 4D RoPE with 3D RoPE significantly degrades Shot Transition Accuracy, demonstrating that the explicit shot axis is critical for respecting shot boundaries.
+      </p>
+      <p class="ablation-visual-hint">
+        <i class="fas fa-cut" aria-hidden="true"></i>
+        Hint: scissors mark the configured shot transition positions shared by both videos in each row.
       </p>
       <div id="ablation-rope-list" class="comparison-group-list"></div>
     </div>
 
     <div class="ablation-subsection">
       <h3 class="title is-4 ablation-subsection-title">Camera Calibration</h3>
-      <p class="content ablation-subsection-text">
+      <p class="content ablation-subsection-text experiment-explanation">
         Unified camera calibration is necessary. Removing global coordinate calibration reduces inter-shot consistency and aesthetics, supporting that unified coordinates are important for geometrically consistent pose conditioning across cuts.
       </p>
       <div id="ablation-camera-calibration-list" class="comparison-group-list"></div>
@@ -196,7 +200,7 @@
 
     <div class="ablation-subsection">
       <h3 class="title is-4 ablation-subsection-title">Training Data</h3>
-      <p class="content ablation-subsection-text">
+      <p class="content ablation-subsection-text experiment-explanation">
         Synthetic supervision hurts film-like rendering. Aesthetics drops noticeably and semantics slightly weakens, suggesting real cinematic triplets provide crucial composition/lighting cues beyond what synthetic triplets capture.
       </p>
       <div id="ablation-training-data-list" class="comparison-group-list"></div>
@@ -204,7 +208,7 @@
 
     <div class="ablation-subsection">
       <h3 class="title is-4 ablation-subsection-title">Noise Injection Strategy</h3>
-      <p class="content ablation-subsection-text">
+      <p class="content ablation-subsection-text experiment-explanation">
         High-noise-only injection is largely sufficient. Adding an additional low-noise encoder slightly trades off perceptual quality, as early pose injection already establishes the global motion scaffold.
       </p>
       <div id="ablation-noise-injection-list" class="comparison-group-list"></div>

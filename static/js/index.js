@@ -281,6 +281,15 @@ function renderPromptBlock(label, text) {
 
 const scenePromptCache = {};
 
+const comparisonTrajectoryScenes = new Set([
+  "scene_0018",
+  "scene_0114",
+  "scene_0118",
+  "scene_0128",
+  "scene_0143",
+  "scene_0155",
+]);
+
 function parseScenePromptRaw(rawPrompt) {
   const cleanedRawPrompt = rawPrompt.replace(/^\[scene_[^\]]+\]/, "").trim();
   const globalMatch = cleanedRawPrompt.match(/\[global_prompt\]([\s\S]*?)(?=\[shot_\d+_prompt\]|$)/);
@@ -323,6 +332,82 @@ async function getScenePromptData(sceneId) {
   return scenePromptCache[sceneId];
 }
 
+function getTrajectoryImagePath(sceneId, trajectoryImages = null) {
+  if (
+    trajectoryImages &&
+    typeof trajectoryImages === "object" &&
+    trajectoryImages.shot0 &&
+    trajectoryImages.shot1
+  ) {
+    return {
+      shot0: trajectoryImages.shot0,
+      shot1: trajectoryImages.shot1,
+      fallback: trajectoryImages.shot0,
+    };
+  }
+
+  if (!sceneId || !comparisonTrajectoryScenes.has(sceneId)) {
+    return "";
+  }
+
+  return {
+    shot0: `./static/trajectories/${sceneId}/shot_0_global_scale.jpg`,
+    shot1: `./static/trajectories/${sceneId}/shot_1_global_scale.jpg`,
+    fallback: `./static/trajectories/${sceneId}/all_frames.jpg`,
+  };
+}
+
+function renderTrajectoryPanel(group) {
+  const trajectoryPaths = getTrajectoryImagePath(
+    group && group.promptSceneId,
+    group && group.trajectoryImages
+  );
+  if (!trajectoryPaths) {
+    return "";
+  }
+
+  const sceneId = group && group.promptSceneId ? group.promptSceneId : "comparison";
+  const shot0Path = trajectoryPaths.shot0 || trajectoryPaths.fallback;
+  const shot1Path = trajectoryPaths.shot1 || trajectoryPaths.fallback;
+
+  const shot0Panel = `
+    <aside class="comparison-trajectory-panel comparison-trajectory-panel-side" data-shot="0">
+      <div class="comparison-trajectory-title">Camera Trajectory</div>
+      <div class="comparison-trajectory-shot">
+        <div class="comparison-trajectory-shot-title">Shot 0</div>
+        <div class="comparison-trajectory-frame">
+          <img
+            src="${escapeHtml(shot0Path)}"
+            alt="Shot 0 trajectory for ${escapeHtml(sceneId)}"
+            onerror="this.onerror=null; this.src='${escapeHtml(trajectoryPaths.fallback)}'"
+          >
+        </div>
+      </div>
+    </aside>
+  `;
+
+  const shot1Panel = `
+    <aside class="comparison-trajectory-panel comparison-trajectory-panel-side" data-shot="1">
+      <div class="comparison-trajectory-title">Camera Trajectory</div>
+      <div class="comparison-trajectory-shot">
+        <div class="comparison-trajectory-shot-title">Shot 1</div>
+        <div class="comparison-trajectory-frame">
+          <img
+            src="${escapeHtml(shot1Path)}"
+            alt="Shot 1 trajectory for ${escapeHtml(sceneId)}"
+            onerror="this.onerror=null; this.src='${escapeHtml(trajectoryPaths.fallback)}'"
+          >
+        </div>
+      </div>
+    </aside>
+  `;
+
+  return {
+    left: shot0Panel,
+    right: shot1Panel,
+  };
+}
+
 function renderPromptPanel(promptData) {
   if (!promptData || !promptData.globalPrompt) {
     return `<div class="comparison-prompt-status">Prompt unavailable.</div>`;
@@ -356,7 +441,10 @@ function renderShotverseResults() {
     return;
   }
 
+  const hiddenShotverseResultCaseIds = new Set(["01", "02", "06"]);
+
   container.innerHTML = shotverseResultsData
+    .filter((item) => !hiddenShotverseResultCaseIds.has(item.caseId))
     .map((item) => {
       const promptBlocks = [
         renderPromptBlock("Global Prompt", item.globalPrompt),
@@ -389,11 +477,54 @@ function renderShotverseResults() {
     .join("");
 }
 
-function renderComparisonVideoTile(videoItem) {
+function renderVideoShotTimeline(timeline) {
+  if (
+    !timeline ||
+    !Number.isFinite(timeline.totalFrames) ||
+    timeline.totalFrames <= 0 ||
+    !Array.isArray(timeline.shotCutFrames) ||
+    timeline.shotCutFrames.length < 2
+  ) {
+    return "";
+  }
+
+  const markers = timeline.shotCutFrames
+    .slice(1)
+    .map((frame) => {
+      const ratio = Math.min(Math.max(frame / timeline.totalFrames, 0), 1);
+      return `
+        <span
+          class="video-shot-timeline-marker"
+          style="left: ${(ratio * 100).toFixed(3)}%;"
+        >
+          <span class="video-shot-timeline-marker-badge">
+            <i class="fas fa-cut"></i>
+          </span>
+          <span class="video-shot-timeline-marker-stem"></span>
+        </span>
+      `;
+    })
+    .join("");
+
+  return `
+    <div class="video-shot-timeline" aria-hidden="true">
+      <span class="video-shot-timeline-track"></span>
+      <span class="video-shot-timeline-progress"></span>
+      ${markers}
+    </div>
+  `;
+}
+
+function renderComparisonVideoTile(videoItem, timeline = null) {
+  const resolvedTimeline = videoItem.shotTimeline || timeline;
+  const timelineMarkup = renderVideoShotTimeline(resolvedTimeline);
+  const hasShotTimeline = timelineMarkup ? "true" : "false";
+
   return `
     <div class="comparison-video-item">
       <div class="comparison-video-label">${escapeHtml(videoItem.label)}</div>
-      <div class="comparison-video-frame">
+      <div class="comparison-video-frame" data-has-shot-timeline="${hasShotTimeline}">
+        ${timelineMarkup}
         <video autoplay controls muted loop playsinline preload="metadata">
           <source src="${escapeHtml(videoItem.videoPath)}" type="video/mp4">
         </video>
@@ -402,15 +533,74 @@ function renderComparisonVideoTile(videoItem) {
   `;
 }
 
+function syncShotTimelineProgress(video) {
+  const frame = video.closest(".comparison-video-frame");
+  if (!frame) {
+    return;
+  }
+
+  const progressBar = frame.querySelector(".video-shot-timeline-progress");
+  if (!progressBar) {
+    return;
+  }
+
+  if (!Number.isFinite(video.duration) || video.duration <= 0) {
+    progressBar.style.width = "0%";
+    return;
+  }
+
+  const ratio = Math.min(Math.max(video.currentTime / video.duration, 0), 1);
+  progressBar.style.width = `${ratio * 100}%`;
+}
+
+function bindShotTimelinePlayers(scope = document) {
+  const videos = scope.querySelectorAll(
+    '.comparison-video-frame[data-has-shot-timeline="true"] video'
+  );
+
+  videos.forEach((video) => {
+    if (video.dataset.shotTimelineBound === "true") {
+      syncShotTimelineProgress(video);
+      return;
+    }
+
+    video.dataset.shotTimelineBound = "true";
+    const sync = () => syncShotTimelineProgress(video);
+
+    [
+      "loadedmetadata",
+      "durationchange",
+      "timeupdate",
+      "seeking",
+      "seeked",
+      "play",
+      "pause",
+      "ended",
+    ].forEach((eventName) => {
+      video.addEventListener(eventName, sync);
+    });
+
+    sync();
+  });
+}
+
 function renderGroupedVideoCard(group, promptData) {
   const countClassName = `count-${group.videos.length}`;
   const gridClassName = `comparison-video-grid ${countClassName}`;
+  const trajectoryPanel = renderTrajectoryPanel(group);
+  const hasTrajectory = Boolean(trajectoryPanel);
 
   return `
     <article class="comparison-group-card ${countClassName}">
       <div class="comparison-group-stack ${countClassName}">
-        <div class="${gridClassName}">
-          ${group.videos.map(renderComparisonVideoTile).join("")}
+        <div class="comparison-media-layout${hasTrajectory ? " has-trajectory" : ""}">
+          ${hasTrajectory ? trajectoryPanel.left : ""}
+          <div class="${gridClassName}">
+            ${group.videos
+              .map((videoItem) => renderComparisonVideoTile(videoItem, group.shotTimeline))
+              .join("")}
+          </div>
+          ${hasTrajectory ? trajectoryPanel.right : ""}
         </div>
         ${renderPromptPanel(promptData)}
       </div>
@@ -433,6 +623,8 @@ async function renderGroupedVideoList(containerId, groups) {
   container.innerHTML = groups
     .map((group, index) => renderGroupedVideoCard(group, promptDataList[index]))
     .join("");
+
+  bindShotTimelinePlayers(container);
 }
 
 function renderComparisonSections() {
